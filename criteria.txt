@@ -1,0 +1,112 @@
+/*
+*
+* to get command line arguments at program startup, do this:
+* ./gradlew run --args='input.txt'
+* otherwise, it will have ArrayIndexOutOfBoundException
+*/
+
+Criteria 2: Clear and distinct package/class/interface/method responsibilities
+Explanation: 
+FileIO.java: the class for file IO. in this class, there is one readFile method which
+basically reads the file of the filename given on command line.
+
+ErrorCheck.java: this class is used consists of methods for error checking, which in this case 
+is checking for duplicates, checking for invalid filename inputs adn invalid messages from poll()
+
+AssTwoException.java: this is my own exception class. Whenever I need to catch an error or throw
+an exception, i will call this exception.
+
+SimulatorApp.java: main method is in here. the whole simulation (the simulation loop) done here.
+
+Event.java: stores information of an event.
+
+EventList.java: stores a list of events.
+
+State Pattern .java files: (Explanations can be found in Criteria 6)
+Fire: FireContext.java, FireState.java, LowIntensity.java, LowIntensityAttended.java, 
+HighIntensity.java, HighIntensityAttended.java, Extinguish.java
+- all of these files are for fire event. 
+
+Flood: FloodContext.java, FloodState.java, Flooded.java, FloodAttended.java, Dissipated.java
+- all of these files are for flood event.
+
+Chemical spill: ChemContext.java, ChemState.java, ChemSpilled.java, ChemSpilledAttended.java,
+CleanedUp.java
+- all of these files are for chemical spill event.
+
+State Pattern methods:
+casualty(...): to find the number of casualties
+damage(...): to find the number of property damaged
+contamination(...): to find the number of environmental contamination
+updateTime(...): states changes in this method.
+
+Observer Pattern .java files:
+FireContext.java, FloodContext.java and ChemContext.java are my subjects. ResObserver.java 
+is the interface of the observer pattern and ResConcreteObs.java is the concrete observer.
+
+----------------------------------------------------------------------------------------------------
+
+Criteria 3: Appropriate error handling and logging
+Explanation: 
+Error handling is done for:
+- the filename. It checks to make sure user does not enter any
+invalid input such as a file thts not .txt file, file that does not exist or number
+as input file.
+- the event. It checks to make sure that there is no event
+that is duplicated. For example, fire at Midtown can only happen once in the simulation.
+There are also error handled in SimulatorApp.java.
+- the messages from poll(). when there is an invalid message(i.e a message including a location or 
+type of event that does not much the current event happening), it is logged.
+
+----------------------------------------------------------------------------------------------------
+
+Criteria 4: Implementation of dependency injection
+Explanation: 
+dependency injection is done in my main method. The objects are initialised at the start of the 
+program. In this program, there is no static method calls as well as indirect dependencies in 
+constructor methods.
+
+----------------------------------------------------------------------------------------------------------
+
+Criteria 5: Use of the Observer Pattern
+Explanation: 
+Observer pattern is used when there is an event happening and states change. For example, in a 
+fire event, it will initially notify the responders when the fire started. When the state changes from
+low to high, it will notify the responders as well. Not only that, when the fire is extinguished, 
+it will once again notify the responders about it. The same goes to flood and chemical spill except for 
+the state changing from low to high part since both these events do not have low intensity and 
+high intensity states.
+
+----------------------------------------------------------------------------------------------------------
+
+Criteria 6: Use of the State Pattern
+Explanation: 
+I used the state pattern for fire, flood and chemical spill emergency events. 
+
+Fire:
+there are 5 states which are LowIntensity, HighIntensity, LowIntensityAttended, 
+HighIntensityAttended, Extinguish.
+Initially, it will be at LowIntensity state, after FIRE_LOW_HIGH_TIME with the absence of
+fire fighters, it will enter HighIntensity state and keep staying in this state if the fire 
+fighters never arrives. However, if fire fighters arrive when the fire is in LowIntensity state,
+then it will enter LowIntensityAttended state. The same goes to when fire is in HighIntensity state.
+LowIntensityAttended and HighIntensityAttended states can go back to LowIntensity and HighIntensity
+if the fire fighters leave when fire is not extinguished yet. When fire is extinguished with the fire 
+fighters presence, it will enter Extinguish state.
+
+Flood:
+there are 3 states which are Flooded, FloodAttended and Dissipated.
+The first state when flood happens is Flooded. In this state, there can be new casualties or 
+property damages. If flood rescuers are present, then it changes to FloodAttended state and there
+will be no new casualties. However, proper damages will still happen. When the flood is
+dissipated, then it will enter Dissipated state.
+
+Chemical spill:
+there are 3 states as well, which are ChemSpilled, ChemSpilledAttended, CleanedUp.
+ChemSpilled is the initial state when a chemical spill event occurs. When it is attended by the
+clean up team, it will take them CHEM_CLEANUP_TIME to clean up the chemical. However, if clean up 
+team leaves in the when the chemical is not cleaned up yet, the number of casualties and 
+environmental contamination will keep increasing. If clean up team stays until the chemical 
+is fully cleaned up, then it will enter CleanedUp state.
+
+

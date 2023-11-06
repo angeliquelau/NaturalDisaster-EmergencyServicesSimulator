@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="6.43.0" timestamp="2022-05-28T21:36:18.474">
+<file name="C:\Users\Angelique\OneDrive\Documents\curtin\Y2S2\OOSE\assignment2\20322904_Assignment2\src\main\java\FileIO.java">
+<violation beginline="15" endline="15" begincolumn="29" endcolumn="30" rule="CloseResource" ruleset="Error Prone" package="edu.curtin.emergencysim" class="FileIO" method="readFile" variable="fs" externalInfoUrl="https://pmd.github.io/pmd-6.43.0/pmd_rules_java_errorprone.html#closeresource" priority="3">
+Ensure that resources like this FileInputStream object are closed after use
+</violation>
+<violation beginline="16" endline="16" begincolumn="31" endcolumn="34" rule="CloseResource" ruleset="Error Prone" package="edu.curtin.emergencysim" class="FileIO" method="readFile" variable="read" externalInfoUrl="https://pmd.github.io/pmd-6.43.0/pmd_rules_java_errorprone.html#closeresource" priority="3">
+Ensure that resources like this FileInputStream object are closed after use
+</violation>
+<violation beginline="17" endline="17" begincolumn="28" endcolumn="34" rule="CloseResource" ruleset="Error Prone" package="edu.curtin.emergencysim" class="FileIO" method="readFile" variable="bufRead" externalInfoUrl="https://pmd.github.io/pmd-6.43.0/pmd_rules_java_errorprone.html#closeresource" priority="3">
+Ensure that resources like this InputStreamReader object are closed after use
+</violation>
+</file>
+</pmd>
